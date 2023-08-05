@@ -1,0 +1,25 @@
+version: '3'
+services:
+  nginx:
+    ports:
+    #80 port liysma3 fih nginx
+      - "3000:80"
+  node-app:
+    build: 
+      context: .
+      args:
+        - NODE_ENV=development
+    volumes:
+      - ./:/app:ro
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGO_USER=allachaib31
+      - MONGO_PASSWORD=alla2020
+      - SESSION_SECRET=secret
+    command: npm run dev
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=allachaib31
+      - MONGO_INITDB_ROOT_PASSWORD=alla2020

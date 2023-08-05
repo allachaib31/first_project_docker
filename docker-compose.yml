@@ -1,0 +1,28 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:stable-alpine
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+  node-app:
+    build: .
+    #ports: say min darna nginx mchi oblige ndiro hado
+    #  - "3000:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      #bakhyin nmcho mongo lwl bech ida matmchach mach9ach nmcho node
+      - mongo
+  
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=allachaib31
+      - MONGO_INITDB_ROOT_PASSWORD=alla2020
+    volumes:
+      #hadi darnaha psq min rana ndir down databast ta3na tro7 sima li9 ngololh bli ydirlha volumes we mongo-db darnaha be min ndiro docker volumes ls ttla3na be hada ism 
+      - mongo-db:/data/db
+
+volumes:
+  #darnaha bech ga3 element y9ado ywslolha
+  mongo-db:
